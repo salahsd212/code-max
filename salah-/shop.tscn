@@ -1,0 +1,107 @@
+[gd_scene load_steps=6 format=3 uid="uid://bpsl7waxq0s76"]
+
+[ext_resource type="Script" uid="uid://m3sskgneiqch" path="res://scens/shop.gd" id="1_viryw"]
+
+[sub_resource type="Animation" id="Animation_pavbv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
+}
+
+[sub_resource type="Animation" id="Animation_air2l"]
+resource_name = "oppen"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1.1, 1.1)]
+}
+
+[sub_resource type="Animation" id="Animation_b0hxy"]
+resource_name = "close"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1.1, 1.1), Vector2(1e-05, 1e-05)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b0hxy"]
+_data = {
+&"RESET": SubResource("Animation_pavbv"),
+&"close": SubResource("Animation_b0hxy"),
+&"oppen": SubResource("Animation_air2l")
+}
+
+[node name="shop" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_viryw")
+
+[node name="Panel" type="Panel" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 231.0
+offset_top = -14.0
+offset_right = 985.0
+offset_bottom = 587.0
+scale = Vector2(1.1, 1.1)
+
+[node name="close" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 576.0
+offset_top = 5.0
+offset_right = 754.0
+offset_bottom = 62.0
+theme_override_font_sizes/font_size = 35
+text = "x"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Panel"]
+libraries = {
+&"": SubResource("AnimationLibrary_b0hxy")
+}
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 6.0
+offset_right = 750.0
+offset_bottom = 83.0
+theme_override_font_sizes/font_size = 100
+text = "متجر"
+horizontal_alignment = 1
+
+[node name="oppen" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1040.0
+offset_top = 319.0
+offset_right = 1171.0
+offset_bottom = 396.0
+theme_override_font_sizes/font_size = 50
+text = "متجر"
+
+[connection signal="pressed" from="Panel/close" to="." method="_on_close_pressed"]
+[connection signal="pressed" from="oppen" to="." method="_on_oppen_pressed"]
